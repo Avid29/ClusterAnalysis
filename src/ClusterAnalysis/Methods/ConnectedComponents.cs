@@ -19,12 +19,13 @@ public static class ConnectedComponents
     /// <typeparam name="T">The type of points to cluster.</typeparam>
     /// <param name="points">The list of points to cluster.</param>
     /// <param name="space">The <see cref="IMetricSpace{T}"/> defining the space.</param>
+    /// <param name="range">The maximum range that components are considered connected.</param>
     /// <returns>A list of clusters.</returns>
-    public static List<List<T>> Cluster<T>(IList<T> points, IMetricSpace<T> space)
+    public static List<List<T>> Cluster<T>(IList<T> points, IMetricSpace<T> space, float range = float.PositiveInfinity)
     {
         // Create cluster list and context for child methods
         var clusters = new List<List<T>>();
-        var context = new Context<T>(points, space);
+        var context = new Context<T>(points, space, range);
 
         // Iterate every point
         for (int i = 0; i < points.Count; i++)
@@ -61,7 +62,7 @@ public static class ConnectedComponents
                 if (context.ClusterIds[j] != 0)
                     continue;
 
-                if (!float.IsNaN(context.Space.Distance(p, context.Points[j])))
+                if (context.Space.Distance(p, context.Points[j]) <= context.Range)
                 {
                     // Add point j to this cluster
                     cluster.Add(context.Points[j]);
@@ -78,10 +79,11 @@ public static class ConnectedComponents
         /// <summary>
         /// Initializes a new instance of the <see cref="Context{T}"/> struct.
         /// </summary>
-        public Context(IList<T> points, IMetricSpace<T> space)
+        public Context(IList<T> points, IMetricSpace<T> space, float range)
         {
             Points = points;
             Space = space;
+            Range = range;
             ClusterIds = new int[Points.Count];
             CurrentClusterId = 0;
         }
@@ -95,6 +97,11 @@ public static class ConnectedComponents
         /// Gets the <see cref="IMetricSpace{T}"/> defining the space.
         /// </summary>
         public IMetricSpace<T> Space { get; }
+
+        /// <summary>
+        /// Gets the maximum range that components are considered connected.
+        /// </summary>
+        public float Range { get; }
 
         /// <summary>
         /// Gets an array for containing the id of points in <see cref="Points"/>.
