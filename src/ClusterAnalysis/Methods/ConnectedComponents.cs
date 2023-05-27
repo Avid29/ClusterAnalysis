@@ -1,4 +1,5 @@
 ﻿// Adam Dernis 2023
+// Written at https://youtu.be/aMvMKCRSbgg?t=442
 
 using ClusterAnalysis.Spaces;
 
@@ -7,7 +8,7 @@ namespace ClusterAnalysis.Methods;
 /// <summary>
 /// A static class containing connected components methods.
 /// </summary>
-public class ConnectedComponents
+public static class ConnectedComponents
 {
     /// <summary>
     /// Clusters a set of points using connected components.

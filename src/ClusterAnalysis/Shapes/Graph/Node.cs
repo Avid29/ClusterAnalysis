@@ -1,5 +1,6 @@
 ﻿// Adam Dernis 2023
-
+// Written at https://youtu.be/aMvMKCRSbgg?t=304
+ 
 namespace ClusterAnalysis.Shapes.Graph;
 
 /// <summary>

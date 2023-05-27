@@ -1,4 +1,5 @@
 ﻿// Adam Dernis 2023
+// Written at https://youtu.be/aMvMKCRSbgg?t=377
 
 using ClusterAnalysis.Spaces;
 using CommunityToolkit.Diagnostics;
