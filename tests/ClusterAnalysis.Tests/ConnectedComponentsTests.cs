@@ -53,8 +53,8 @@ public class ConnectedComponentsTests
         var shape = new MatrixShape(4);
 
         // Connect a to d and d to c
-        shape.AddConnection(a, d);
-        shape.AddConnection(d, c);
+        shape.AddConnection(a, d, 1);
+        shape.AddConnection(d, c, 1);
 
         // Cluster over the set of points
         var clusters = ConnectedComponents.Cluster(points, shape);
@@ -78,8 +78,8 @@ public class ConnectedComponentsTests
         var shape = new TShape();
 
         // Connect a to d and d to c
-        shape.AddConnection(a, d);
-        shape.AddConnection(d, c);
+        shape.AddConnection(a, d, 1);
+        shape.AddConnection(d, c, 1);
 
         return shape;
     }

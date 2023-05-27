@@ -61,7 +61,7 @@ public static class ConnectedComponents
                 if (context.ClusterIds[j] != 0)
                     continue;
 
-                if (context.Space.Distance(p, context.Points[j]))
+                if (!float.IsNaN(context.Space.Distance(p, context.Points[j])))
                 {
                     // Add point j to this cluster
                     cluster.Add(context.Points[j]);

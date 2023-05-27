@@ -14,16 +14,14 @@ public interface IMetricSpace<in T>
     /// </summary>
     /// <param name="node1">The first node to connect.</param>
     /// <param name="node2">The second node to connect.</param>
-    void AddConnection(T node1, T node2);
+    /// <param name="distance">The distance between the nodes.</param>
+    void AddConnection(T node1, T node2, float distance);
 
     /// <summary>
     /// Gets the distance between points <paramref name="a"/> and <paramref name="b"/>.
     /// </summary>
-    /// <remarks>
-    /// Temporarily a bool in place of a float.
-    /// </remarks>
     /// <param name="a">Point a.</param>
     /// <param name="b">Point b.</param>
     /// <returns>The distance between point <paramref name="a"/> and <paramref name="b"/>.</returns>
-    bool Distance(T a, T b);
+    float Distance(T a, T b);
 }
