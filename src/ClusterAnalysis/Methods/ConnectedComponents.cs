@@ -10,6 +10,8 @@ namespace ClusterAnalysis.Methods;
 /// </summary>
 public static class ConnectedComponents
 {
+    private const int UNCLASSIFIED_ID = 0;
+
     /// <summary>
     /// Clusters a set of points using connected components.
     /// </summary>
@@ -31,7 +33,7 @@ public static class ConnectedComponents
         for (int i = 0; i < points.Count; i++)
         {
             // Skip if the point is already a member of a cluster
-            if (context.ClusterIds[i] != 0)
+            if (context.ClusterIds[i] != UNCLASSIFIED_ID)
                 continue;
 
             // Create a cluster around point i
@@ -59,7 +61,7 @@ public static class ConnectedComponents
             for (int j = 0; j < context.Points.Count; j++)
             {
                 // Skip if the point is already a member of another cluster
-                if (context.ClusterIds[j] != 0)
+                if (context.ClusterIds[j] != UNCLASSIFIED_ID)
                     continue;
 
                 if (context.Space.Distance(p, context.Points[j]) <= context.Range)
