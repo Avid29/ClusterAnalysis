@@ -8,28 +8,29 @@ namespace ClusterAnalysis.Shapes.Graph;
 /// </summary>
 public class Node
 {
-    private readonly HashSet<Node> _connections;
+    private readonly Dictionary<Node, float> _connections;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Node"/> class.
     /// </summary>
     public Node()
     {
-        _connections = new HashSet<Node>();
+        _connections = new Dictionary<Node, float>();
     }
 
     /// <summary>
     /// Adds a connection to a node.
     /// </summary>
     /// <param name="node">The node to connect with,</param>
-    public void AddConnection(Node node)
-        => _connections.Add(node);
+    /// <param name="distance">The distance from the node.</param>
+    public void AddConnection(Node node, float distance)
+        => _connections.Add(node, distance);
 
     /// <summary>
     /// Gets if a node is connected to this node.
     /// </summary>
     /// <param name="node">The node to check for a connection with.</param>
     /// <returns>True if the nodes are connected. False otherwise.</returns>
-    public bool IsConnected(Node node)
-        => _connections.Contains(node);
+    public float Distance(Node node)
+        => _connections.ContainsKey(node) ? _connections[node] : float.NaN;
 }

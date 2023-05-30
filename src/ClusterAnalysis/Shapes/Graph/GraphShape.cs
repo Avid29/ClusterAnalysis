@@ -11,14 +11,14 @@ namespace ClusterAnalysis.Shapes.Graph;
 public class GraphShape : IMetricSpace<Node>
 {
     /// <inheritdoc/>
-    public void AddConnection(Node node1, Node node2)
+    public void AddConnection(Node node1, Node node2, float distance)
     {
         // Add connection bidirectionally so lookup works either way
-        node1.AddConnection(node2);
-        node2.AddConnection(node1);
+        node1.AddConnection(node2, distance);
+        node2.AddConnection(node1, distance);
     }
     
     /// <inheritdoc/>
-    public bool Distance(Node a, Node b)
-        => a.IsConnected(b);
+    public float Distance(Node a, Node b)
+        => a.Distance(b);
 }

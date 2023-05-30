@@ -10,25 +10,25 @@ namespace ClusterAnalysis.Shapes.Matrix;
 /// </summary>
 public class SparseMatrixShape : IMetricSpace<MatrixCell>
 {
-    private readonly HashSet<(MatrixCell, MatrixCell)> _connections;
+    private readonly Dictionary<(MatrixCell, MatrixCell), float> _connections;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SparseMatrixShape"/> class.
     /// </summary>
     public SparseMatrixShape()
     {
-        _connections = new HashSet<(MatrixCell, MatrixCell)>();
+        _connections = new Dictionary<(MatrixCell, MatrixCell), float>();
     }
 
     /// <inheritdoc/>
-    public void AddConnection(MatrixCell node1, MatrixCell node2)
+    public void AddConnection(MatrixCell node1, MatrixCell node2, float distance)
     {
         // Add connection bidirectionally so lookup works either way
-        _connections.Add((node1, node2));
-        _connections.Add((node2, node1));
+        _connections.Add((node1, node2), distance);
+        _connections.Add((node2, node1), distance);
     }
     
     /// <inheritdoc/>
-    public bool Distance(MatrixCell a, MatrixCell b)
-        => _connections.Contains((a, b));
+    public float Distance(MatrixCell a, MatrixCell b)
+        => _connections.ContainsKey((a, b)) ? _connections[(a, b)] : float.NaN;
 }

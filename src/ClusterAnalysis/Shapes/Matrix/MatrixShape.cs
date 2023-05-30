@@ -11,18 +11,22 @@ namespace ClusterAnalysis.Shapes.Matrix;
 /// </summary>
 public class MatrixShape : IMetricSpace<MatrixCell>
 {
-    private readonly bool[,] _connections;
+    private readonly float[,] _connections;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MatrixShape"/> class.
     /// </summary>
     public MatrixShape(int size)
     {
-        _connections = new bool[size, size];
+        _connections = new float[size, size];
+
+        for (int i  = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                _connections[i, j] = float.NaN;
     }
 
     /// <inheritdoc/>
-    public void AddConnection(MatrixCell node1, MatrixCell node2)
+    public void AddConnection(MatrixCell node1, MatrixCell node2, float distance)
     {
         // Ensure the nodes are within the matrix size
         var max = _connections.GetLength(0);
@@ -30,11 +34,11 @@ public class MatrixShape : IMetricSpace<MatrixCell>
         Guard.IsLessThan(node2.Value, max);
 
         // Add connection bidirectionally so lookup works either way
-        _connections[node1.Value, node2.Value] = true;
-        _connections[node2.Value, node1.Value] = true;
+        _connections[node1.Value, node2.Value] = distance;
+        _connections[node2.Value, node1.Value] = distance;
     }
     
     /// <inheritdoc/>
-    public bool Distance(MatrixCell a, MatrixCell b)
+    public float Distance(MatrixCell a, MatrixCell b)
         => _connections[a.Value, b.Value];
 }
