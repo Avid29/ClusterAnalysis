@@ -63,7 +63,7 @@ public static class OPTICS
         // Get the point
         T p = context.Points[index];
 
-        foreach(var n in neighbors!)
+        foreach(var n in neighbors)
         {
             // Skip processed points
             if (context.ProcessedSet.Contains(n))
@@ -89,10 +89,8 @@ public static class OPTICS
         return true;
     }
 
-    private static float GetCoreDistance<T>(int index, Context<T> context, out List<int>? neighbors)
+    private static float GetCoreDistance<T>(int index, Context<T> context, out int[] neighbors)
     {
-        neighbors = null;
-
         // Create a list of index of neighboring points
         var neighborDist = new List<(int, float)>();
 
@@ -112,13 +110,16 @@ public static class OPTICS
 
         // Return NaN if point is not a core point
         if (neighborDist.Count < context.MinPoints)
+        {
+            neighbors = Array.Empty<int>();
             return float.NaN;
+        }
 
         // Sort by distance
         neighborDist.Sort((x, y) => y.CompareTo(x));
 
         // Get a list with just the neighbor indices.
-        neighbors = neighborDist.Select(x => x.Item1).ToList();
+        neighbors = neighborDist.Select(x => x.Item1).ToArray();
 
         // Return the [min points]th distance
         return neighborDist[context.MinPoints-1].Item2;
@@ -170,7 +171,7 @@ public static class OPTICS
         return clusters;
     }
 
-    private ref struct Context<T>
+    private readonly ref struct Context<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Context{T}"/> struct.
